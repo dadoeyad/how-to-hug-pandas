@@ -1,0 +1,1182 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/os-theme.css">
+    <link rel="stylesheet" href="css/zenburn.css">
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section class="intro">
+          <img class="logo" src="images/logo-home.png">
+          <h1>How to hug <strong>Pandas</strong></h1>
+          <div class="fecha">Eyad Tomeh. PyconEs, Septiembre 2017</div>
+        </section>
+
+        <section class="green">
+          <h1>What is<strong> Pandas?</strong></h1>
+
+          <p>pandas is an open source, BSD-licensed library providing high-performance, easy-to-use data structures and data analysis tools for the Python programming language.</p>
+
+          <img src="images/laptop-hands.png" alt="" class="detail">
+        </section>
+
+        <section class="white">
+          <h1>Why<strong> pandas?</strong></h1>
+          <h2>What makes pandas different</h2>
+          <ul>
+            <li>
+              A fast and efficient DataFrame object for data manipulation
+            </li>
+            <li>
+              Tools for reading/writing data between in-memory data structures and different formats...
+            </li>
+            <li>
+              Intelligent data alignment and integrated handling of missing data..
+            </li>
+            <li>
+              High performance merging and joining of data sets
+            </li>
+            <li>
+              Time series-functionality: date range generation and frequency conversion...
+            </li>
+            <li>
+              Highly optimized for performance, with critical code paths written in Cython or C
+            </li>
+            <li>
+              Python with pandas is in use in a wide variety of academic and commercial domains...
+            </li>
+          </ul>
+        </section>
+
+                <section class="white">
+          <h1>Pandas <strong>Data types</strong></h1>
+          <h2>Series</h2>
+
+          <p>A pandas Series combines the idea of a list with an additional index column, by default this is a numeric index starting at zero</p>
+          <pre><code class="python" data-trim>
+series = pd.Series( ['one', 'two', 'three', 'four'] )
+print(series)
+print(series.index)
+          </code></pre>
+          <pre><code class="python">
+0      one
+1      two
+2    three
+3     four
+dtype: object
+
+RangeIndex(start=0, stop=4, step=1)
+          </code></pre>
+
+          <img src="images/laptop-hands.png" alt="" class="detail">
+        </section>
+
+        <section class="white">
+          <h1>Pandas <strong>Data types</strong></h1>
+          <h2>Dataframes</h2>
+
+          <p>DataFrames are two-dimensional data tables in which rows of data have values spread across one or more columns, much like a sheet in a spreadsheet. Each column behaves as if it is a Series; a DataFrame can thus be thought of as a dict of Series, where dict keys correspond to column names</p>
+
+          <pre><code class="python" data-trim>
+import pandas as pd
+
+# loading a dict
+shinyData = {
+    'project': ['mio', 'todoslosdemas'],
+    'points':[12912, 1],
+    'tech': ['pandas', 'mascosas']
+}
+
+shiny_df = pd.DataFrame(shinyData)
+print(shiny_df)
+          </code></pre>
+          <pre><code class="python">
+   points        project      tech
+0   12912            mio    pandas
+1       1  todoslosdemas  mascosas
+          </code></pre>
+
+          <img src="images/slider01.png" alt="" class="detail">
+        </section>
+
+        <section class="green">
+          <h1>Loading <strong>data</strong></h1>
+          <h2>Importing dict into dataframes</h2>
+
+          <pre><code class="python" data-trim>
+import pandas as pd
+
+# loading a dict
+shinyData = {
+    'project': ['mio', 'todoslosdemas'],
+    'points':[12912, 1],
+    'tech': ['pandas', 'mascosas']
+}
+
+shiny_df = pd.DataFrame(shinyData)
+print(shiny_df)
+          </code></pre>
+          <pre><code class="python">
+   points        project      tech
+0   12912            mio    pandas
+1       1  todoslosdemas  mascosas
+          </code></pre>
+
+          <img src="images/slider03.png" alt="" class="detail">
+        </section>
+
+        <section class="green">
+          <h1>Loading <strong>data</strong></h1>
+          <h2>Importing csv into dataframes</h2>
+
+          <pre><code class="python" data-trim>
+import pandas as pd
+
+# loading a csv file
+
+shiny_df = pd.from_csv('path/to/file.csv', sep=',', skiprows=5)
+shiny_df = pd.from_json('path/to/file.json')
+shiny_df = pd.read_sql('SELECT points, project, tech FROM open_shine_data', con=connection)
+shiny_df = pd.read_sql_table('open_shine_data', con=connection)
+print(shiny_df)
+          </code></pre>
+          <pre><code class="python">
+   points        project      tech
+0   12912            mio    pandas
+1       1  todoslosdemas  mascosas
+          </code></pre>
+
+          <img src="images/slider03.png" alt="" class="detail">
+        </section>
+
+        <section class="white">
+          <h1>Getting <strong>statistics</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python" data-trim>
+d = {'one' : pd.Series([1., 2., 3.], index=['a', 'b', 'c']),
+     'two' : pd.Series([1., 2., 3., 4.], index=['a', 'b', 'c', 'd'])}
+df = pd.DataFrame(d)
+print(df)
+          </code></pre>
+
+          <pre><code class="python">
+   one  two
+a  1.0  1.0
+b  2.0  2.0
+c  3.0  3.0
+d  NaN  4.0
+          </code></pre>
+
+          <p>Describe</p>
+          <pre><code class="python" data-trim>
+print(df.describe())
+          </code></pre>
+
+          <pre><code class="python">
+       one       two
+count  3.0  4.000000
+mean   2.0  2.500000
+std    1.0  1.290994
+min    1.0  1.000000
+25%    1.5  1.750000
+50%    2.0  2.500000
+75%    2.5  3.250000
+max    3.0  4.000000
+          </code></pre>
+
+        </section>
+
+        <section class="white">
+          <h1>Getting <strong>statistics</strong></h1>
+
+          <p>Dataframe</p>
+
+          <pre><code class="python">
+   one  two
+a  1.0  1.0
+b  2.0  2.0
+c  3.0  3.0
+d  NaN  4.0
+          </code></pre>
+
+          <p>Sum</p>
+          <pre><code class="python" data-trim>
+print(df.sum())
+print(df.one.sum())
+          </code></pre>
+
+          <pre><code class="python" data-trim>
+one     6.0
+two    10.0
+dtype: float64
+
+6.0
+          </code></pre>
+
+        </section>
+
+        <section class="white">
+          <h1>Getting <strong>statistics</strong></h1>
+
+          <p>Dataframe</p>
+
+          <pre><code class="python">
+   one  two
+a  1.0  1.0
+b  2.0  2.0
+c  3.0  3.0
+d  NaN  4.0
+          </code></pre>
+
+          <p>Mean</p>
+          <pre><code class="python" data-trim>
+print(df.mean())
+print(df.one.mean())
+          </code></pre>
+
+          <pre><code class="python" data-trim>
+one    2.0
+two    2.5
+dtype: float64
+
+2.0
+          </code></pre>
+
+        </section>
+
+        <section class="white">
+          <h1>Getting <strong>statistics</strong></h1>
+
+          <p>Dataframe</p>
+          </code></pre>
+
+          <pre><code class="python">
+   one  two
+a  1.0  1.0
+b  2.0  2.0
+c  3.0  3.0
+d  NaN  4.0
+          </code></pre>
+
+          <p>Cumulative sum</p>
+          <pre><code class="python" data-trim>
+print(df.cumsum())
+print(df.two.cumsum())
+          </code></pre>
+
+          <pre><code class="python">
+   one   two
+a  1.0   1.0
+b  3.0   3.0
+c  6.0   6.0
+d  NaN  10.0
+
+
+a     1.0
+b     3.0
+c     6.0
+d    10.0
+Name: two, dtype: float64
+          </code></pre>
+
+        </section>
+
+        <section class="white">
+          <h1>Indexing <strong>DataFrames</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python" data-trim>
+d = {'name' : ['Algo', 'Otro', 'Nuevo', 'Antiguo', 'Entre los dos'],
+     'value' : [21, 32, 65, 69, 31],
+     'date': ['2017-01-01', '2017-02-01', '2017-03-01', '2017-04-01', '2017-04-01']}
+df = pd.DataFrame(d)
+print(df)
+          </code></pre>
+
+          <pre><code class="python">
+         date           name  value
+0  2017-01-01           Algo     21
+1  2017-02-01           Otro     32
+2  2017-03-01          Nuevo     65
+3  2017-04-01        Antiguo     69
+4  2017-04-01  Entre los dos     31
+          </code></pre>
+
+          <p>Set index</p>
+          <pre><code class="python" data-trim>
+print(df.set_index('name'))
+          </code></pre>
+
+          <pre><code class="python">
+                     date  value
+name
+Algo           2017-01-01     21
+Otro           2017-02-01     32
+Nuevo          2017-03-01     65
+Antiguo        2017-04-01     69
+Entre los dos  2017-04-01     31
+          </code></pre>
+
+        </section>
+
+        <section class="white">
+          <h1>Indexing <strong>DataFrames</strong></h1>
+
+          <p>Reset index</p>
+          <pre><code class="python" data-trim>
+df = df.set_index('name')
+print(df)
+print(df.reset_index())
+          </code></pre>
+
+          <pre><code class="python">
+
+                     date  value
+name
+Algo           2017-01-01     21
+Otro           2017-02-01     32
+Nuevo          2017-03-01     65
+Antiguo        2017-04-01     69
+Entre los dos  2017-04-01     31
+
+            name        date  value
+0           Algo  2017-01-01     21
+1           Otro  2017-02-01     32
+2          Nuevo  2017-03-01     65
+3        Antiguo  2017-04-01     69
+4  Entre los dos  2017-04-01     31
+          </code></pre>
+
+        </section>
+
+        <section class="white">
+          <h1>Indexing <strong>DataFrames</strong></h1>
+
+          <p>Reset index</p>
+          <pre><code class="python" data-trim>
+df = df[df['value'] < 60]
+print(df)
+
+df.reset_index()
+
+df.reset_index(drop=True)
+
+          </code></pre>
+
+          <pre><code class="python">
+         date           name  value
+0  2017-01-01           Algo     21
+1  2017-02-01           Otro     32
+4  2017-04-01  Entre los dos     31
+
+
+   index        date           name  value
+0      0  2017-01-01           Algo     21
+1      1  2017-02-01           Otro     32
+2      4  2017-04-01  Entre los dos     31
+
+
+         date           name  value
+0  2017-01-01           Algo     21
+1  2017-02-01           Otro     32
+2  2017-04-01  Entre los dos     31
+          </code></pre>
+
+        </section>
+
+        <section class="white">
+          <h1>Indexing <strong>DataFrames</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python" data-trim>
+d = {'name' : ['Algo', 'Otro', 'Nuevo', 'Antiguo', 'Entre los dos'],
+     'value' : [21, 32, 65, 69, 31]}
+df = pd.DataFrame(d, index=pd.DatetimeIndex(start='2017-01-01', end='2017-01-09', freq='2D'))
+
+print(df)
+print(df.index)
+          </code></pre>
+
+          <pre><code class="python">
+                     name  value
+2017-01-01           Algo     21
+2017-01-03           Otro     32
+2017-01-05          Nuevo     65
+2017-01-07        Antiguo     69
+2017-01-09  Entre los dos     31
+
+DatetimeIndex(['2017-01-01', '2017-01-03', '2017-01-05', '2017-01-07',
+               '2017-01-09'],
+              dtype='datetime64[ns]', freq='2D')
+          </code></pre>
+
+        </section>
+
+        <section class="white">
+          <h1>Indexing <strong>DataFrames</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python">
+                     name  value
+2017-01-01           Algo     21
+2017-01-03           Otro     32
+2017-01-05          Nuevo     65
+2017-01-07        Antiguo     69
+2017-01-09  Entre los dos     31
+          </code></pre>
+
+          <p>reindex</p>
+          <pre><code class="python" data-trim>
+df = df.reindex(pd.DatetimeIndex(start='2017-01-01', end='2017-01-10', freq='D'))
+print(df)
+          </code></pre>
+
+          <pre><code class="python">
+                     name  value
+2017-01-01           Algo   21.0
+2017-01-02            NaN    NaN
+2017-01-03           Otro   32.0
+2017-01-04            NaN    NaN
+2017-01-05          Nuevo   65.0
+2017-01-06            NaN    NaN
+2017-01-07        Antiguo   69.0
+2017-01-08            NaN    NaN
+2017-01-09  Entre los dos   31.0
+2017-01-10            NaN    NaN
+          </code></pre>
+
+        </section>
+
+        <section class="white">
+          <h1>Indexing <strong>DataFrames</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python">
+                     name  value
+2017-01-01           Algo   21.0
+2017-01-02            NaN    NaN
+2017-01-03           Otro   32.0
+2017-01-04            NaN    NaN
+2017-01-05          Nuevo   65.0
+2017-01-06            NaN    NaN
+2017-01-07        Antiguo   69.0
+2017-01-08            NaN    NaN
+2017-01-09  Entre los dos   31.0
+2017-01-10            NaN    NaN
+          </code></pre>
+
+          <p>reindex</p>
+          <pre><code class="python" data-trim>
+print(df.ffill())
+          </code></pre>
+
+          <pre><code class="python">
+                     name  value
+2017-01-01           Algo   21.0
+2017-01-02           Algo   21.0
+2017-01-03           Otro   32.0
+2017-01-04           Otro   32.0
+2017-01-05          Nuevo   65.0
+2017-01-06          Nuevo   65.0
+2017-01-07        Antiguo   69.0
+2017-01-08        Antiguo   69.0
+2017-01-09  Entre los dos   31.0
+2017-01-10  Entre los dos   31.0
+          </code></pre>
+
+        </section>
+
+        <section class="white">
+          <h1>Indexing <strong>DataFrames</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python">
+                     name  value
+2017-01-01           Algo   21.0
+2017-01-02            NaN    NaN
+2017-01-03           Otro   32.0
+2017-01-04            NaN    NaN
+2017-01-05          Nuevo   65.0
+2017-01-06            NaN    NaN
+2017-01-07        Antiguo   69.0
+2017-01-08            NaN    NaN
+2017-01-09  Entre los dos   31.0
+2017-01-10            NaN    NaN
+          </code></pre>
+
+          <p>reindex</p>
+          <pre><code class="python" data-trim>
+print(df.bfill())
+          </code></pre>
+
+          <pre><code class="python">
+                     name  value
+2017-01-01           Algo   21.0
+2017-01-02           Otro   32.0
+2017-01-03           Otro   32.0
+2017-01-04          Nuevo   65.0
+2017-01-05          Nuevo   65.0
+2017-01-06        Antiguo   69.0
+2017-01-07        Antiguo   69.0
+2017-01-08  Entre los dos   31.0
+2017-01-09  Entre los dos   31.0
+2017-01-10            NaN    NaN
+          </code></pre>
+
+        </section>
+
+        <section class="green">
+          <h1>Filtering <strong>DataFrames</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python" data-trim>
+d = {'name' : ['Algo', 'Otro', 'Nuevo', 'Antiguo', 'Entre los dos'],
+     'value' : [21, 32, 65, 69, 31],
+     'date': ['2017-01-01', '2017-02-01', '2017-03-01', '2017-04-01', '2017-05-01']}
+df = pd.DataFrame(d)
+df['date'] = pd.to_datetime(df['date'])
+print(df)
+          </code></pre>
+
+          <pre><code class="python">
+         date           name  value
+0  2017-01-01           Algo     21
+1  2017-02-01           Otro     32
+2  2015-03-01          Nuevo     65
+3  2017-04-01        Antiguo     69
+4  2017-05-01  Entre los dos     31
+          </code></pre>
+
+        </section>
+
+        <section class="green">
+          <h1>Filtering <strong>DataFrames</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python" data-trim>
+         date           name  value
+0  2017-01-01           Algo     21
+1  2017-02-01           Otro     32
+2  2017-03-01          Nuevo     65
+3  2017-04-01        Antiguo     69
+4  2017-05-01  Entre los dos     31
+          </code></pre>
+
+          <pre><code class="python">
+print(df[df['value'] < 60])
+          </code></pre>
+
+          <pre><code class="python">
+         date           name  value
+0  2017-01-01           Algo     21
+1  2017-02-01           Otro     32
+4  2017-05-01  Entre los dos     31
+          </code></pre>
+
+        </section>
+
+        <section class="green">
+          <h1>Filtering <strong>DataFrames</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python" data-trim>
+         date           name  value
+0  2017-01-01           Algo     21
+1  2017-02-01           Otro     32
+2  2017-03-01          Nuevo     65
+3  2017-04-01        Antiguo     69
+4  2017-05-01  Entre los dos     31
+          </code></pre>
+
+          <pre><code class="python">
+print(df[df['name'] == 'Algo'])
+          </code></pre>
+
+          <pre><code class="python">
+         date  name  value
+0  2017-01-01  Algo     21
+          </code></pre>
+
+        </section>
+
+        <section class="green">
+          <h1>Filtering <strong>DataFrames</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python" data-trim>
+         date           name  value
+0  2017-01-01           Algo     21
+1  2017-02-01           Otro     32
+2  2017-03-01          Nuevo     65
+3  2017-04-01        Antiguo     69
+4  2017-05-01  Entre los dos     31
+          </code></pre>
+
+          <pre><code class="python">
+print(df[df['name'].isin(['Algo', 'Nuevo'])])
+          </code></pre>
+
+          <pre><code class="python">
+         date   name  value
+0  2017-01-01   Algo     21
+2  2017-03-01  Nuevo     65
+          </code></pre>
+
+        </section>
+
+        <section class="green">
+          <h1>Filtering <strong>DataFrames</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python" data-trim>
+         date           name  value
+0  2017-01-01           Algo     21
+1  2017-02-01           Otro     32
+2  2017-03-01          Nuevo     65
+3  2017-04-01        Antiguo     69
+4  2017-05-01  Entre los dos     31
+          </code></pre>
+
+          <pre><code class="python">
+print(df[(df['value'] < 60) & (df['date'] <= datetime(2017, 5, 1))])
+          </code></pre>
+
+          <pre><code class="python">
+        date           name  value
+0 2017-01-01           Algo     21
+1 2017-02-01           Otro     32
+4 2017-05-01  Entre los dos     31
+          </code></pre>
+
+        </section>
+
+        <section class="green">
+          <h1>Filtering <strong>DataFrames</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python" data-trim>
+         date           name  value
+0  2017-01-01           Algo     21
+1  2017-02-01           Otro     32
+2  2017-03-01          Nuevo     65
+3  2017-04-01        Antiguo     69
+4  2017-05-01  Entre los dos     31
+          </code></pre>
+
+          <pre><code class="python">
+print(df['name'].isin(['Algo', 'Nuevo']))
+          </code></pre>
+
+          <pre><code class="python">
+0     True
+1    False
+2     True
+3    False
+4    False
+Name: name, dtype: bool
+          </code></pre>
+
+        </section>
+
+        <section class="white">
+          <h1>Vector <strong>Operations</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python" data-trim>
+d = {'name' : ['Algo', 'Otro', 'Nuevo', 'Antiguo', 'Entre los dos'],
+     'x' : [21, 32, 65, 69, 31],
+     'y' : [55, 47, 21, 78, 89],
+     'date': ['2017-01-01', '2017-02-01', '2017-03-01', '2017-04-01', '2017-05-01']}
+df = pd.DataFrame(d)
+print(df)
+          </code></pre>
+
+          <pre><code class="python">
+         date           name   x   y
+0  2017-01-01           Algo  21  55
+1  2017-02-01           Otro  32  47
+2  2017-03-01          Nuevo  65  21
+3  2017-04-01        Antiguo  69  78
+4  2017-05-01  Entre los dos  31  89
+          </code></pre>
+
+        </section>
+
+        <section class="white">
+          <h1>Vector <strong>Operations</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python">
+         date           name   x   y
+0  2017-01-01           Algo  21  55
+1  2017-02-01           Otro  32  47
+2  2017-03-01          Nuevo  65  21
+3  2017-04-01        Antiguo  69  78
+4  2017-05-01  Entre los dos  31  89
+          </code></pre>
+
+          <pre><code class="python">
+df['x_por_y'] = df['x'] * df['y']
+df['x_sobre_y'] = df['x'] / df['y']
+print(df)
+          </code></pre>
+
+          <pre><code class="python">
+         date           name   x   y  x_por_y  x_sobre_y
+0  2017-01-01           Algo  21  55     1155   0.381818
+1  2017-02-01           Otro  32  47     1504   0.680851
+2  2017-03-01          Nuevo  65  21     1365   3.095238
+3  2017-04-01        Antiguo  69  78     5382   0.884615
+4  2017-05-01  Entre los dos  31  89     2759   0.348315
+          </code></pre>
+
+        </section>
+
+        <section class="white">
+          <h1>Vector <strong>Operations</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python">
+         date           name   x   y
+0  2017-01-01           Algo  21  55
+1  2017-02-01           Otro  32  47
+2  2017-03-01          Nuevo  65  21
+3  2017-04-01        Antiguo  69  78
+4  2017-05-01  Entre los dos  31  89
+          </code></pre>
+
+          <pre><code class="python">
+df['x_por_2'] = df['x'] * 2
+df['formula'] = (((df['x'] / df['y']) * 100) - 3) *df['x']
+print(df)
+          </code></pre>
+
+          <pre><code class="python">
+         date           name   x   y  x_por_2       formula
+0  2017-01-01           Algo  21  55       42    738.818182
+1  2017-02-01           Otro  32  47       64   2082.723404
+2  2017-03-01          Nuevo  65  21      130  19924.047619
+3  2017-04-01        Antiguo  69  78      138   5896.846154
+4  2017-05-01  Entre los dos  31  89       62    986.775281
+          </code></pre>
+
+        </section>
+
+        <section class="white">
+          <h1>Apply <strong>Series</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python">
+         date           name   x   y
+0  2017-01-01           Algo  21  55
+1  2017-02-01           Otro  32  47
+2  2017-03-01          Nuevo  65  21
+3  2017-04-01        Antiguo  69  78
+4  2017-05-01  Entre los dos  31  89
+          </code></pre>
+
+          <pre><code class="python">
+df['x_por_2'] = df['x'].apply(lambda x: x * 2)
+print(df)
+          </code></pre>
+
+          <pre><code class="python">
+         date           name   x   y  x_por_2
+0  2017-01-01           Algo  21  55       42
+1  2017-02-01           Otro  32  47       64
+2  2017-03-01          Nuevo  65  21      130
+3  2017-04-01        Antiguo  69  78      138
+4  2017-05-01  Entre los dos  31  89       62
+          </code></pre>
+
+        </section>
+
+        <section class="white">
+          <h1>Apply <strong>Series</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python">
+         date           name   x   y
+0  2017-01-01           Algo  21  55
+1  2017-02-01           Otro  32  47
+2  2017-03-01          Nuevo  65  21
+3  2017-04-01        Antiguo  69  78
+4  2017-05-01  Entre los dos  31  89
+          </code></pre>
+
+          <pre><code class="python">
+def do_stuff_to_x_but_be_gentle(x):
+  if x in list_of_thing:
+    return x * 2
+  else:
+    return x
+
+
+df['formula'] = df['x'].apply(do_stuff_to_x_but_be_gentle)
+          </code></pre>
+
+        </section>
+
+        <section class="green">
+          <h1>Groupby <strong>Dataframe</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python">
+d = {'name' : ['Algo', 'Otro', 'Nuevo', 'Antiguo', 'Entre los dos', 'Meh'],
+     'type': ['Python-y', 'Django-y', 'Python-y', 'Django-y', 'Python-y', 'Django-y'],
+     'x' : [21, 32, 65, 69, 31, 39],
+     'y' : [55, 47, 21, 78, 89, 50],
+     'date': ['2017-01-01', '2017-01-01', '2017-01-02', '2017-01-02', '2017-01-03', '2017-01-03']}
+df = pd.DataFrame(d)
+
+df = df[['type', 'date', 'name', 'x', 'y']]
+df['date'] = pd.to_datetime(df['date'])
+print(df)
+          </code></pre>
+
+          <pre><code class="python">
+       type       date           name   x   y
+0  Python-y 2017-01-01           Algo  21  55
+1  Django-y 2017-01-01           Otro  32  47
+2  Python-y 2017-01-02          Nuevo  65  21
+3  Django-y 2017-01-02        Antiguo  69  78
+4  Python-y 2017-01-03  Entre los dos  31  89
+5  Django-y 2017-01-03            Meh  39  50
+          </code></pre>
+
+        </section>
+
+        <section class="green">
+          <h1>Groupby <strong>Dataframe</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python">
+       type       date           name   x   y
+0  Python-y 2017-01-01           Algo  21  55
+1  Django-y 2017-01-01           Otro  32  47
+2  Python-y 2017-01-02          Nuevo  65  21
+3  Django-y 2017-01-02        Antiguo  69  78
+4  Python-y 2017-01-03  Entre los dos  31  89
+5  Django-y 2017-01-03            Meh  39  50
+          </code></pre>
+
+          <pre><code class="python">
+print(df.groupby('type').sum())
+          </code></pre>
+
+          <pre><code class="python">
+            x    y
+type
+Django-y  140  175
+Python-y  117  165
+          </code></pre>
+
+        </section>
+
+        <section class="green">
+          <h1>Groupby <strong>Dataframe</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python">
+       type       date           name   x   y
+0  Python-y 2017-01-01           Algo  21  55
+1  Django-y 2017-01-01           Otro  32  47
+2  Python-y 2017-01-02          Nuevo  65  21
+3  Django-y 2017-01-02        Antiguo  69  78
+4  Python-y 2017-01-03  Entre los dos  31  89
+5  Django-y 2017-01-03            Meh  39  50
+          </code></pre>
+
+          <pre><code class="python">
+print(df.groupby('type').mean())
+          </code></pre>
+
+          <pre><code class="python">
+                  x          y
+type
+Django-y  46.666667  58.333333
+Python-y  39.000000  55.000000
+          </code></pre>
+
+        </section>
+
+        <section class="green">
+          <h1>Groupby <strong>Dataframe</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python">
+       type       date           name   x   y
+0  Python-y 2017-01-01           Algo  21  55
+1  Django-y 2017-01-01           Otro  32  47
+2  Python-y 2017-01-02          Nuevo  65  21
+3  Django-y 2017-01-02        Antiguo  69  78
+4  Python-y 2017-01-03  Entre los dos  31  89
+5  Django-y 2017-01-03            Meh  39  50
+          </code></pre>
+
+          <pre><code class="python">
+print(df.groupby('type').first())
+          </code></pre>
+
+          <pre><code class="python">
+               date  name   x   y
+type
+Django-y 2017-01-01  Otro  32  47
+Python-y 2017-01-01  Algo  21  55
+          </code></pre>
+
+        </section>
+
+        <section class="green">
+          <h1>Groupby <strong>Dataframe</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python">
+       type       date           name   x   y
+0  Python-y 2017-01-01           Algo  21  55
+1  Django-y 2017-01-01           Otro  32  47
+2  Python-y 2017-01-02          Nuevo  65  21
+3  Django-y 2017-01-02        Antiguo  69  78
+4  Python-y 2017-01-03  Entre los dos  31  89
+5  Django-y 2017-01-03            Meh  39  50
+          </code></pre>
+
+          <pre><code class="python">
+df = df.groupby('type').agg({
+    'date': 'count',
+    'name': 'last',
+    'x': 'sum',
+    'y': 'mean'
+})
+print(df)
+          </code></pre>
+
+          <pre><code class="python">
+          date           name    x          y
+type
+Django-y     3            Meh  140  58.333333
+Python-y     3  Entre los dos  117  55.000000
+          </code></pre>
+
+        </section>
+
+        <section class="green">
+          <h1>Resample <strong>Dataframe</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python">
+d = {'name' : ['Algo', 'Otro', 'Nuevo', 'Antiguo', 'Entre los dos', 'Meh'],
+     'x' : [21, 32, 65, 69, 31, 39],
+     'y' : [55, 47, 21, 78, 89, 50]}
+
+df = pd.DataFrame(d, index=pd.DatetimeIndex(start='2017-01-01 00:00:00', end='2017-01-01 01:15:00', freq='15T'))
+
+df = df[['name', 'x', 'y']]
+print(df)
+          </code></pre>
+
+          <pre><code class="python">
+                              name   x   y
+2017-01-01 00:00:00           Algo  21  55
+2017-01-01 00:15:00           Otro  32  47
+2017-01-01 00:30:00          Nuevo  65  21
+2017-01-01 00:45:00        Antiguo  69  78
+2017-01-01 01:00:00  Entre los dos  31  89
+2017-01-01 01:15:00            Meh  39  50
+          </code></pre>
+
+        </section>
+
+        <section class="green">
+          <h1>Resample <strong>Dataframe</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python">
+                              name   x   y
+2017-01-01 00:00:00           Algo  21  55
+2017-01-01 00:15:00           Otro  32  47
+2017-01-01 00:30:00          Nuevo  65  21
+2017-01-01 00:45:00        Antiguo  69  78
+2017-01-01 01:00:00  Entre los dos  31  89
+2017-01-01 01:15:00            Meh  39  50
+          </code></pre>
+
+          <pre><code class="python">
+print(df.resample('1h').sum())
+          </code></pre>
+
+          <pre><code class="python">
+                       x    y
+2017-01-01 00:00:00  187  201
+2017-01-01 01:00:00   70  139
+          </code></pre>
+
+        </section>
+
+        <section class="green">
+          <h1>Resample <strong>Dataframe</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python">
+                              name   x   y
+2017-01-01 00:00:00           Algo  21  55
+2017-01-01 00:15:00           Otro  32  47
+2017-01-01 00:30:00          Nuevo  65  21
+2017-01-01 00:45:00        Antiguo  69  78
+2017-01-01 01:00:00  Entre los dos  31  89
+2017-01-01 01:15:00            Meh  39  50
+          </code></pre>
+
+          <pre><code class="python">
+print(df.resample('30T').mean())
+          </code></pre>
+
+          <pre><code class="python">
+                        x     y
+2017-01-01 00:00:00  26.5  51.0
+2017-01-01 00:30:00  67.0  49.5
+2017-01-01 01:00:00  35.0  69.5
+          </code></pre>
+
+        </section>
+
+        <section class="white">
+          <h1>More groupby <strong>Dataframe</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python">
+d = {'name' : ['Algo', 'Otro', 'Nuevo', 'Antiguo', 'Entre los dos', 'Meh', 'Mas1', 'Mas1'],
+     'type': ['Python-y', 'Django-y', 'Python-y', 'Django-y', 'Python-y', 'Django-y', 'Python-y', 'Django-y'],
+     'date': ['2017-01-01 00:00:00', '2017-01-01 00:00:00',
+              '2017-01-01 00:15:00', '2017-01-01 00:15:00',
+              '2017-01-01 00:30:00', '2017-01-01 00:30:00',
+              '2017-01-01 00:45:00', '2017-01-01 00:45:00'],
+     'x' : [21, 32, 65, 69, 31, 39, 22, 34],
+     'y' : [55, 47, 21, 78, 89, 50, 92, 12]}
+df = pd.DataFrame(d)
+df = df[['type', 'date', 'name', 'x', 'y']]
+df['date'] = pd.to_datetime(df['date'])
+print(df)
+          </code></pre>
+
+          <pre><code class="python">
+       type                date           name   x   y
+0  Python-y 2017-01-01 00:00:00           Algo  21  55
+1  Django-y 2017-01-01 00:00:00           Otro  32  47
+2  Python-y 2017-01-01 00:15:00          Nuevo  65  21
+3  Django-y 2017-01-01 00:15:00        Antiguo  69  78
+4  Python-y 2017-01-01 00:30:00  Entre los dos  31  89
+5  Django-y 2017-01-01 00:30:00            Meh  39  50
+6  Python-y 2017-01-01 00:45:00           Mas1  22  92
+7  Django-y 2017-01-01 00:45:00           Mas1  34  12
+          </code></pre>
+
+        </section>
+
+        <section class="white">
+          <h1>More groupby <strong>Dataframe</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python">
+       type                date           name   x   y
+0  Python-y 2017-01-01 00:00:00           Algo  21  55
+1  Django-y 2017-01-01 00:00:00           Otro  32  47
+2  Python-y 2017-01-01 00:15:00          Nuevo  65  21
+3  Django-y 2017-01-01 00:15:00        Antiguo  69  78
+4  Python-y 2017-01-01 00:30:00  Entre los dos  31  89
+5  Django-y 2017-01-01 00:30:00            Meh  39  50
+6  Python-y 2017-01-01 00:45:00           Mas1  22  92
+7  Django-y 2017-01-01 00:45:00           Mas1  34  12
+          </code></pre>
+
+          <pre><code class="python">
+print(df.groupby(['type', 'date']).sum())
+          </code></pre>
+
+          <pre><code class="python">
+                               x   y
+type     date
+Django-y 2017-01-01 00:00:00  32  47
+         2017-01-01 00:15:00  69  78
+         2017-01-01 00:30:00  39  50
+         2017-01-01 00:45:00  34  12
+Python-y 2017-01-01 00:00:00  21  55
+         2017-01-01 00:15:00  65  21
+         2017-01-01 00:30:00  31  89
+         2017-01-01 00:45:00  22  92
+          </code></pre>
+
+        </section>
+
+        <section class="white">
+          <h1>More groupby <strong>Dataframe</strong></h1>
+
+          <p>Dataframe</p>
+          <pre><code class="python">
+       type                date           name   x   y
+0  Python-y 2017-01-01 00:00:00           Algo  21  55
+1  Django-y 2017-01-01 00:00:00           Otro  32  47
+2  Python-y 2017-01-01 00:15:00          Nuevo  65  21
+3  Django-y 2017-01-01 00:15:00        Antiguo  69  78
+4  Python-y 2017-01-01 00:30:00  Entre los dos  31  89
+5  Django-y 2017-01-01 00:30:00            Meh  39  50
+6  Python-y 2017-01-01 00:45:00           Mas1  22  92
+7  Django-y 2017-01-01 00:45:00           Mas1  34  12
+          </code></pre>
+
+          <pre><code class="python">
+print(df.groupby(['type', pd.Grouper(key='date', freq='30T')]).sum())
+          </code></pre>
+
+          <pre><code class="python">
+                                x    y
+type     date
+Django-y 2017-01-01 00:00:00  101  125
+         2017-01-01 00:30:00   73   62
+Python-y 2017-01-01 00:00:00   86   76
+         2017-01-01 00:30:00   53  181
+          </code></pre>
+
+        </section>
+
+        <section class="intro">
+          <img class="logo" src="images/logo-home.png">
+          <h1>QUESTIONS<strong>?</strong></h1>
+          <div class="fecha">Eyad Tomeh. PyconEs, Septiembre 2017</div>
+        </section>
+
+        <section class="intro">
+          <img class="logo" src="images/logo-home.png">
+          <h1>THANKS<strong>!</strong></h1>
+          <div class="fecha">Eyad Tomeh. PyconEs, Septiembre 2017</div>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="js/reveal.js"></script>
+    <script src="js/head.js"></script>
+    <script>
+      Reveal.initialize({
+         dependencies: [
+          { src: 'js/plugin/markdown/marked.js' },
+          { src: 'js/plugin/markdown/markdown.js' },
+          { src: 'js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } }
+        ],
+        controls: false,
+        progress: false,
+        history: true,
+        width: "100%",
+        height: "100%",
+        margin: 0,
+        minScale: 1,
+        maxScale: 1,
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+      });
+    </script>
+  </body>
+</html>

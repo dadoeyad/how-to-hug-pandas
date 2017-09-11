@@ -1,0 +1,11 @@
+image: ubuntu:16.04
+
+pages:
+  script:
+  - mkdir public
+  - cp -r index.html css fonts images js public/
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
