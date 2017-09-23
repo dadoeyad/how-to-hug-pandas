@@ -104,33 +104,7 @@ print(shiny_df)
 
         <section class="green">
           <h1>Loading <strong>data</strong></h1>
-          <h2>Importing dict into dataframes</h2>
-
-          <pre><code class="python" data-trim>
-import pandas as pd
-
-# loading a dict
-shinyData = {
-    'project': ['mio', 'todoslosdemas'],
-    'points':[12912, 1],
-    'tech': ['pandas', 'mascosas']
-}
-
-shiny_df = pd.DataFrame(shinyData)
-print(shiny_df)
-          </code></pre>
-          <pre><code class="python">
-   points        project      tech
-0   12912            mio    pandas
-1       1  todoslosdemas  mascosas
-          </code></pre>
-
-          <img src="images/slider03.png" alt="" class="detail">
-        </section>
-
-        <section class="green">
-          <h1>Loading <strong>data</strong></h1>
-          <h2>Importing csv into dataframes</h2>
+          <h2>Importing data into dataframes</h2>
 
           <pre><code class="python" data-trim>
 import pandas as pd
@@ -215,21 +189,6 @@ two    10.0
 dtype: float64
 
 6.0
-          </code></pre>
-
-        </section>
-
-        <section class="white">
-          <h1>Getting <strong>statistics</strong></h1>
-
-          <p>Dataframe</p>
-
-          <pre><code class="python">
-   one  two
-a  1.0  1.0
-b  2.0  2.0
-c  3.0  3.0
-d  NaN  4.0
           </code></pre>
 
           <p>Mean</p>
@@ -357,29 +316,32 @@ Entre los dos  2017-04-01     31
           <h1>Indexing <strong>DataFrames</strong></h1>
 
           <p>Reset index</p>
-          <pre><code class="python" data-trim>
+          <pre><code class="python">
+# Filter
 df = df[df['value'] < 60]
 print(df)
 
-df.reset_index()
+# Reset
+print(df.reset_index())
 
-df.reset_index(drop=True)
-
+# Reset
+print(df.reset_index(drop=True))
           </code></pre>
-
           <pre><code class="python">
          date           name  value
 0  2017-01-01           Algo     21
 1  2017-02-01           Otro     32
 4  2017-04-01  Entre los dos     31
+          </code></pre>
 
-
+          <pre><code class="python">
    index        date           name  value
 0      0  2017-01-01           Algo     21
 1      1  2017-02-01           Otro     32
 2      4  2017-04-01  Entre los dos     31
+          </code></pre>
 
-
+          <pre><code class="python">
          date           name  value
 0  2017-01-01           Algo     21
 1  2017-02-01           Otro     32
@@ -408,6 +370,8 @@ print(df.index)
 2017-01-05          Nuevo     65
 2017-01-07        Antiguo     69
 2017-01-09  Entre los dos     31
+          </code></pre>
+          <pre><code class="python">
 
 DatetimeIndex(['2017-01-01', '2017-01-03', '2017-01-05', '2017-01-07',
                '2017-01-09'],
@@ -469,7 +433,7 @@ print(df)
 2017-01-10            NaN    NaN
           </code></pre>
 
-          <p>reindex</p>
+          <p>ffill</p>
           <pre><code class="python" data-trim>
 print(df.ffill())
           </code></pre>
@@ -508,7 +472,7 @@ print(df.ffill())
 2017-01-10            NaN    NaN
           </code></pre>
 
-          <p>reindex</p>
+          <p>bfill</p>
           <pre><code class="python" data-trim>
 print(df.bfill())
           </code></pre>
@@ -533,31 +497,7 @@ print(df.bfill())
           <h1>Filtering <strong>DataFrames</strong></h1>
 
           <p>Dataframe</p>
-          <pre><code class="python" data-trim>
-d = {'name' : ['Algo', 'Otro', 'Nuevo', 'Antiguo', 'Entre los dos'],
-     'value' : [21, 32, 65, 69, 31],
-     'date': ['2017-01-01', '2017-02-01', '2017-03-01', '2017-04-01', '2017-05-01']}
-df = pd.DataFrame(d)
-df['date'] = pd.to_datetime(df['date'])
-print(df)
-          </code></pre>
-
           <pre><code class="python">
-         date           name  value
-0  2017-01-01           Algo     21
-1  2017-02-01           Otro     32
-2  2015-03-01          Nuevo     65
-3  2017-04-01        Antiguo     69
-4  2017-05-01  Entre los dos     31
-          </code></pre>
-
-        </section>
-
-        <section class="green">
-          <h1>Filtering <strong>DataFrames</strong></h1>
-
-          <p>Dataframe</p>
-          <pre><code class="python" data-trim>
          date           name  value
 0  2017-01-01           Algo     21
 1  2017-02-01           Otro     32
@@ -583,7 +523,7 @@ print(df[df['value'] < 60])
           <h1>Filtering <strong>DataFrames</strong></h1>
 
           <p>Dataframe</p>
-          <pre><code class="python" data-trim>
+          <pre><code class="python">
          date           name  value
 0  2017-01-01           Algo     21
 1  2017-02-01           Otro     32
@@ -607,7 +547,7 @@ print(df[df['name'] == 'Algo'])
           <h1>Filtering <strong>DataFrames</strong></h1>
 
           <p>Dataframe</p>
-          <pre><code class="python" data-trim>
+          <pre><code class="python">
          date           name  value
 0  2017-01-01           Algo     21
 1  2017-02-01           Otro     32
@@ -632,7 +572,7 @@ print(df[df['name'].isin(['Algo', 'Nuevo'])])
           <h1>Filtering <strong>DataFrames</strong></h1>
 
           <p>Dataframe</p>
-          <pre><code class="python" data-trim>
+          <pre><code class="python">
          date           name  value
 0  2017-01-01           Algo     21
 1  2017-02-01           Otro     32
@@ -658,7 +598,7 @@ print(df[(df['value'] < 60) & (df['date'] <= datetime(2017, 5, 1))])
           <h1>Filtering <strong>DataFrames</strong></h1>
 
           <p>Dataframe</p>
-          <pre><code class="python" data-trim>
+          <pre><code class="python">
          date           name  value
 0  2017-01-01           Algo     21
 1  2017-02-01           Otro     32
@@ -678,30 +618,6 @@ print(df['name'].isin(['Algo', 'Nuevo']))
 3    False
 4    False
 Name: name, dtype: bool
-          </code></pre>
-
-        </section>
-
-        <section class="white">
-          <h1>Vector <strong>Operations</strong></h1>
-
-          <p>Dataframe</p>
-          <pre><code class="python" data-trim>
-d = {'name' : ['Algo', 'Otro', 'Nuevo', 'Antiguo', 'Entre los dos'],
-     'x' : [21, 32, 65, 69, 31],
-     'y' : [55, 47, 21, 78, 89],
-     'date': ['2017-01-01', '2017-02-01', '2017-03-01', '2017-04-01', '2017-05-01']}
-df = pd.DataFrame(d)
-print(df)
-          </code></pre>
-
-          <pre><code class="python">
-         date           name   x   y
-0  2017-01-01           Algo  21  55
-1  2017-02-01           Otro  32  47
-2  2017-03-01          Nuevo  65  21
-3  2017-04-01        Antiguo  69  78
-4  2017-05-01  Entre los dos  31  89
           </code></pre>
 
         </section>
@@ -810,42 +726,13 @@ print(df)
 
           <pre><code class="python">
 def do_stuff_to_x_but_be_gentle(x):
-  if x in list_of_thing:
+  if x in list_of_things:
     return x * 2
   else:
     return x
 
 
 df['formula'] = df['x'].apply(do_stuff_to_x_but_be_gentle)
-          </code></pre>
-
-        </section>
-
-        <section class="green">
-          <h1>Groupby <strong>Dataframe</strong></h1>
-
-          <p>Dataframe</p>
-          <pre><code class="python">
-d = {'name' : ['Algo', 'Otro', 'Nuevo', 'Antiguo', 'Entre los dos', 'Meh'],
-     'type': ['Python-y', 'Django-y', 'Python-y', 'Django-y', 'Python-y', 'Django-y'],
-     'x' : [21, 32, 65, 69, 31, 39],
-     'y' : [55, 47, 21, 78, 89, 50],
-     'date': ['2017-01-01', '2017-01-01', '2017-01-02', '2017-01-02', '2017-01-03', '2017-01-03']}
-df = pd.DataFrame(d)
-
-df = df[['type', 'date', 'name', 'x', 'y']]
-df['date'] = pd.to_datetime(df['date'])
-print(df)
-          </code></pre>
-
-          <pre><code class="python">
-       type       date           name   x   y
-0  Python-y 2017-01-01           Algo  21  55
-1  Django-y 2017-01-01           Otro  32  47
-2  Python-y 2017-01-02          Nuevo  65  21
-3  Django-y 2017-01-02        Antiguo  69  78
-4  Python-y 2017-01-03  Entre los dos  31  89
-5  Django-y 2017-01-03            Meh  39  50
           </code></pre>
 
         </section>
@@ -866,6 +753,8 @@ print(df)
 
           <pre><code class="python">
 print(df.groupby('type').sum())
+
+print(df.groupby('type').mean())
           </code></pre>
 
           <pre><code class="python">
@@ -873,26 +762,6 @@ print(df.groupby('type').sum())
 type
 Django-y  140  175
 Python-y  117  165
-          </code></pre>
-
-        </section>
-
-        <section class="green">
-          <h1>Groupby <strong>Dataframe</strong></h1>
-
-          <p>Dataframe</p>
-          <pre><code class="python">
-       type       date           name   x   y
-0  Python-y 2017-01-01           Algo  21  55
-1  Django-y 2017-01-01           Otro  32  47
-2  Python-y 2017-01-02          Nuevo  65  21
-3  Django-y 2017-01-02        Antiguo  69  78
-4  Python-y 2017-01-03  Entre los dos  31  89
-5  Django-y 2017-01-03            Meh  39  50
-          </code></pre>
-
-          <pre><code class="python">
-print(df.groupby('type').mean())
           </code></pre>
 
           <pre><code class="python">
@@ -950,7 +819,7 @@ df = df.groupby('type').agg({
     'date': 'count',
     'name': 'last',
     'x': 'sum',
-    'y': 'mean'
+    'y': func_name  # Mean in this example
 })
 print(df)
           </code></pre>
@@ -1049,7 +918,7 @@ print(df.resample('30T').mean())
 
           <p>Dataframe</p>
           <pre><code class="python">
-d = {'name' : ['Algo', 'Otro', 'Nuevo', 'Antiguo', 'Entre los dos', 'Meh', 'Mas1', 'Mas1'],
+d = {'name' : ['Algo', 'Otro', 'Nuevo', 'Antiguo', 'Entre los dos', 'Meh', 'Mas1', 'Mas2'],
      'type': ['Python-y', 'Django-y', 'Python-y', 'Django-y', 'Python-y', 'Django-y', 'Python-y', 'Django-y'],
      'date': ['2017-01-01 00:00:00', '2017-01-01 00:00:00',
               '2017-01-01 00:15:00', '2017-01-01 00:15:00',
@@ -1072,7 +941,7 @@ print(df)
 4  Python-y 2017-01-01 00:30:00  Entre los dos  31  89
 5  Django-y 2017-01-01 00:30:00            Meh  39  50
 6  Python-y 2017-01-01 00:45:00           Mas1  22  92
-7  Django-y 2017-01-01 00:45:00           Mas1  34  12
+7  Django-y 2017-01-01 00:45:00           Mas2  34  12
           </code></pre>
 
         </section>
@@ -1090,7 +959,7 @@ print(df)
 4  Python-y 2017-01-01 00:30:00  Entre los dos  31  89
 5  Django-y 2017-01-01 00:30:00            Meh  39  50
 6  Python-y 2017-01-01 00:45:00           Mas1  22  92
-7  Django-y 2017-01-01 00:45:00           Mas1  34  12
+7  Django-y 2017-01-01 00:45:00           Mas2  34  12
           </code></pre>
 
           <pre><code class="python">
@@ -1125,7 +994,7 @@ Python-y 2017-01-01 00:00:00  21  55
 4  Python-y 2017-01-01 00:30:00  Entre los dos  31  89
 5  Django-y 2017-01-01 00:30:00            Meh  39  50
 6  Python-y 2017-01-01 00:45:00           Mas1  22  92
-7  Django-y 2017-01-01 00:45:00           Mas1  34  12
+7  Django-y 2017-01-01 00:45:00           Mas2  34  12
           </code></pre>
 
           <pre><code class="python">
